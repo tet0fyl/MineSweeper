@@ -1,0 +1,9 @@
+.btn{
+    -fx-background-color:grey;
+    -fx-border-color:white;
+}
+
+.btn:hover{
+    -fx-opacity: 0.5;
+    -fx-cursor: hand;
+}
