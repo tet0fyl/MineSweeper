@@ -2,6 +2,7 @@ package Views;
 
 import Controllers.ControllerGame;
 import Models.ModelGame;
+import Models.Timer;
 import Tool.Path;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,7 +32,8 @@ public class ViewGame {
         imgBomb.setFitHeight(50);
         imgBomb.setFitWidth(50);
 
-        timer = new Text("00:00");
+        timer = new Text();
+        this.model.timer = new Timer(timer) ;
         timer.setFont(Font.font(30));
         HBox.setMargin(timer,new Insets(0,0,0,200));
 
@@ -44,8 +46,6 @@ public class ViewGame {
         hBoxStatusBar.getChildren().add(imgBomb);
         hBoxStatusBar.getChildren().add(txtNbBombe);
         hBoxStatusBar.getChildren().add(timer);
-
-
 
         plateauGUI=model.getPlateau().getPlateauGUI();
 
