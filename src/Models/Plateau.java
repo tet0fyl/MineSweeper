@@ -43,7 +43,7 @@ public class Plateau{
                 }
             }
         }
-        System.out.println("il reste " + nbBombe + " bombe a poser");
+        System.out.println("il reste " + nbBombePlace + " bombe a poser");
         plateauGUI = createLayerFromPlateau();
     }
 

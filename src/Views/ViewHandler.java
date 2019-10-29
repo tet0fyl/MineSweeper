@@ -15,12 +15,14 @@ public class ViewHandler extends Application {
     private ModelGame modelGame;
     private ViewGame viewGame;
     private ControllerGame controllerGame;
+    public int squareSizeScene = 600;
+
 
     @Override
     public void start(Stage stage) throws Exception {
         this.stage=stage;
         root=new BorderPane();
-        scene= new Scene(root,600,600);
+        scene= new Scene(root,squareSizeScene,squareSizeScene);
 
         launchGame();
 

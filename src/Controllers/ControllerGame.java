@@ -4,10 +4,8 @@ import Models.ModelGame;
 import Views.ViewHandler;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-
 
 
 public class ControllerGame implements EventHandler<MouseEvent> {
@@ -34,6 +32,13 @@ public class ControllerGame implements EventHandler<MouseEvent> {
 
         if(modelGame.getPlateau().jaiUneBombe(getX,getY)){
             modelGame.getPlateau().caseDiscoverBomb(launcher.getViewGame().getPlateauGUI(),getX,getY);
+            modelGame.getExplosion().prepare(launcher.squareSizeScene);
+            launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getExplosionGif());
+            launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getScreenBreak());
+            modelGame.getExplosion().start();
+            modelGame.timer.stop();
+
+
         }else{
             modelGame.getPlateau().startWaveDetection(launcher.getViewGame().getPlateauGUI(),getX,getY);
         }

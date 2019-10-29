@@ -53,6 +53,7 @@ public class ViewGame {
         root.setTop(hBoxStatusBar);
         root.setCenter(plateauGUI);
 
+
     }
 
     public void setEvents(ControllerGame controllerGame){
@@ -67,5 +68,9 @@ public class ViewGame {
 
     public Text getTimer() {
         return timer;
+    }
+
+    public BorderPane getRoot() {
+        return root;
     }
 }
