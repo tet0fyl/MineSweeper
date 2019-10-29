@@ -2,16 +2,12 @@ package Controllers;
 
 import Models.ModelGame;
 import Views.ViewHandler;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
-import java.awt.font.NumericShaper;
 
 
 public class ControllerGame implements EventHandler<MouseEvent> {
@@ -37,7 +33,7 @@ public class ControllerGame implements EventHandler<MouseEvent> {
         System.out.println("Clique en X : " + getX + " et Y : " + getY);
 
         if(modelGame.getPlateau().jaiUneBombe(getX,getY)){
-            System.out.println("BOOOOOM GAME OVER");
+            modelGame.getPlateau().caseDiscoverBomb(launcher.getViewGame().getPlateauGUI(),getX,getY);
         }else{
             modelGame.getPlateau().startWaveDetection(launcher.getViewGame().getPlateauGUI(),getX,getY);
         }
@@ -45,7 +41,7 @@ public class ControllerGame implements EventHandler<MouseEvent> {
 
 
         /* -- J'etais parti au debut avec un systeme d'id sur les Button du GridPane du plateau
-        mais cela me causer des bugs aleatoire, certain id n'étais null alors que l'objet cibler en poseder bien
+        mais cela m'a causer des bugs aleatoires, certain id étais null alors que l'objet ciblé en posedait bien
         J'ai decider d'utiliser une methode static plus performante proposer par l'objet Gridpane (voir juste en haut) --
         String getId = mouseEvent.getPickResult().getIntersectedNode().getId();
         System.out.println(getId);

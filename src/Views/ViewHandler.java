@@ -5,12 +5,13 @@ import Models.ModelGame;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 public class ViewHandler extends Application {
     private Stage stage;
     private Scene scene;
-    private Group root;
+    private BorderPane root;
     private ModelGame modelGame;
     private ViewGame viewGame;
     private ControllerGame controllerGame;
@@ -18,8 +19,8 @@ public class ViewHandler extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage=stage;
-        root=new Group();
-        scene= new Scene(root,500,500);
+        root=new BorderPane();
+        scene= new Scene(root,600,600);
 
         launchGame();
 

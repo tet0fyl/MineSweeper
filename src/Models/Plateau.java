@@ -1,7 +1,9 @@
 package Models;
 
+import Tool.Path;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -12,11 +14,13 @@ public class Plateau{
 
     Case plateau[][];
     GridPane plateauGUI;
-    byte nbDeCase = 10;
+    byte nbDeCase = 15;
     int nbBombe;
+    int nbBombePlace;
     byte modeDifficulte;
     boolean bombeCliquee;
     boolean voirLePlacementDesBombe = false;
+    int caseSizeGUI = 30;
 
     Plateau(byte modeDifficulte) {
         bombeCliquee = false;
@@ -28,13 +32,14 @@ public class Plateau{
         else if (modeDifficulte == DIFFICILE)
             nbBombe = 15;
         plateau = new Case[nbDeCase][nbDeCase];
+        nbBombePlace = nbBombe;
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
                 plateau[i][j] = new Case(false);
-                if (nbBombe>0 && (int)(Math.random()*100) < 25) {
+                if (nbBombe>0 && Math.random() > 0.93) {
                     System.out.println("Il y a une bombe en x : " + i + " et y : " + j);
                     plateau[i][j].jaiUneBombe = true;
-                    nbBombe--;
+                    nbBombePlace--;
                 }
             }
         }
@@ -86,8 +91,8 @@ public class Plateau{
                     }
                 }
 
-                btn.setMinWidth(30);
-                btn.setMinHeight(30);
+                btn.setMinWidth(caseSizeGUI);
+                btn.setMinHeight(caseSizeGUI);
                 btn.getStyleClass().add("btn");
 
 
@@ -109,13 +114,28 @@ public class Plateau{
         return nbDeCase;
     }
 
+    public int getNbBombe(){
+        return nbBombe-nbBombePlace;
+    }
+
+    public void caseDiscoverBomb(GridPane grid, int x, int y){
+        Button btn = (Button)getNodeFromGridPane(grid,x,y);
+        ImageView imgBomb = new ImageView(Path.urlBombImg);
+        imgBomb.setFitWidth(caseSizeGUI-20);
+        imgBomb.setFitHeight(caseSizeGUI-20);
+        btn.setGraphic(imgBomb);
+
+    }
+
     public void caseDiscoverStyling(Button btn){
-        btn.setTextFill(Color.RED);
+        btn.setTextFill(Color.BLACK);
     }
 
     public void setVoirLePlacementDesBombe(boolean bool){
         voirLePlacementDesBombe = bool;
     }
+
+
 
                              ////////////////////////////////////////
     /**                         EXPLICATION DU CODE SUIVANT !
@@ -124,10 +144,12 @@ public class Plateau{
      * Ma methode startWaveDetection va lancer la methode yUnderTargetPrimaryDetectionWave qui
      * va lancer une premiere vague sur l'axe des Y vers le bas de la source, et se diviser en deux vagues de X
      * droite et gauche qui vont relancer deux autres vagues en Y en bas et en haut qui vont encore lancer des vagues de
-     * X a droite et gauche. (Ce n'est pas très claire je sais)
+     * X a droite et gauche. Une fois terminer la methode yAboveTargetPrimaryDetectionWave va ce lancer avec le même process
+     * que la precedente mais vers le haut. (Mon explication est peut être flou)
      *
      *
-     * Ma methode n'est clairement pas optimiser, en plus d'etre lourde, elle ne couvre pas toute les cases si le
+     * Ma methode n'est clairement pas optimiser, en plus d'etre lourde (Notament avec la methode getNodeFromGridPane
+     * qui parcourt toute les node du gridpane pour query le node), elle ne couvre pas toute les cases si le
      * chemin est un peu lézardeux et elle repasse plusieurs fois sur des cases déjà découverte.
      *
      * Je serais curieux de voir la manière optimiser de le faire.
