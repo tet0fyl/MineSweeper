@@ -1,4 +1,4 @@
-package Model;
+package Models;
 
 import javafx.scene.Group;
 import javafx.scene.image.Image;
@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 
 /**
                                         J'ai integrer ma class parallax utiliser sur HungryFish pour ce jeu
-                j'ai pu mon confronter au fait qu'un "Framework" même tout petit n'est pas facile a coder pour
+                j'ai pu mon confronter au fait qu'un "Librairie" même toute petit n'est pas facile a coder pour
                 qu'il soit adaptatif.
  */
 
@@ -19,7 +19,7 @@ public class Parallax {
 
     /** MACRO CONTROL */
     private int ratio = 110;
-    private float coef1 = 0.065f;
+    private float coef1 = 0.050f;
     private float coef2 = 0.04f;
     private float coef3 = 0.02f;
     private float coef4 = 0.01f;
@@ -77,16 +77,24 @@ public class Parallax {
      * @param y the y position of the subject where the parallax is apply
      */
     public void move(double x, double y){
-        panel1.setX((relX/2 - x)*coef1);
-        panel1.setY((relY/2 - y)*coef1);
-        panel2.setX((relX/2 - x)*coef2);
-        panel2.setY((relY/2 - y)*coef2);
-        panel3.setX((relX/2 - x)*coef3);
-        panel3.setY((relY/2 - y)*coef3);
-        panel4.setX((relX/2 - x)*coef4);
-        panel4.setY((relY/2 - y)*coef4);
+        panel1.setX((panel1.getX()/2 - (x*coef1)));
+        panel1.setY((panel1.getY()/2 - (y*coef1)));
+        panel2.setX((panel2.getX()/2 - (x*coef2)));
+        panel2.setY((panel2.getY()/2 - (y*coef2)));
+        panel3.setX((panel3.getX()/2 - (x*coef3)));
+        panel3.setY((panel3.getY()/2 - (y*coef3)));
+        panel4.setX((panel4.getX()/2 - (x*coef4)));
+        panel4.setY((panel4.getY()/2 - (y*coef4)));
 
     }
+
+    public void followXSecondaryTarget(double x){
+        panel1.setX((panel1.getX()/2 - (x*coef1)));
+        panel2.setX((panel2.getX()/2 - (x*coef2)));
+        panel3.setX((panel3.getX()/2 - (x*coef3)));
+        panel4.setX((panel4.getX()/2 - (x*coef4)));
+    }
+
 
     /**
      * Get the group of the four image parallax

@@ -3,96 +3,140 @@ package Views;
 import Controllers.ControllerMenu;
 import Models.Menu;
 import Tool.Path;
-import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+
 public class ViewMenuPrincipal {
+    private BorderPane rootBorderPaneMenu, rootBorderPaneOption;
     private BorderPane root;
     private Menu model;
-    private Text mainTitle,txtChoiceDifficulty;
-    private ChoiceBox cbChoiceDifficulty;
-    private Button btnStart,btnTableauDesScore,btnExit;
-    private VBox mainMenuVBox;
+    private Text mainTitle,mainTitleOption;
+    private Button btnStart,btnTableauDesScore,btnOption,btnExit,btnRetourOption;
+    private VBox mainMenuVBox, vBoxOption;
+    private HBox slider;
     private Group parallax;
 
 
 
     public ViewMenuPrincipal(BorderPane root, Menu model){
-        this.root=root;
+        this.root =root;
         this.model = model;
+        rootBorderPaneMenu = new BorderPane();
+        rootBorderPaneOption = new BorderPane();
 
-        mainTitle = new Text("MineSweeper");
-        mainTitle.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 30));
+        initVBoxMenu();
+        initVBoxOption();
+        initParallax();
 
-        BorderPane.setAlignment(mainTitle,Pos.CENTER);
+        clearAndInitRoot();
 
+    }
+
+    public void clearAndInitRoot(){
+        root.getChildren().add(parallax);
+
+        slider = model.slider.initSlider(root,rootBorderPaneMenu,rootBorderPaneOption);
+        root.getChildren().add(slider);
+
+    }
+
+    public void initParallax(){
+
+        parallax = model.parallax.getRoot();
+        model.parallax.initSize(600);
+    }
+
+    public void initVBoxOption(){
+        vBoxOption = new VBox();
+
+        mainTitleOption = initTitle("Option");
+
+        btnRetourOption = initButton("Retour");
+
+        vBoxOption.getChildren().add(mainTitleOption);
+        vBoxOption.getChildren().add(btnRetourOption);
+
+        vBoxOption.setAlignment(Pos.TOP_CENTER);
+        VBox.setMargin(mainTitleOption,new Insets(75,0,50,0));
+        vBoxOption.setSpacing(25);
+
+        rootBorderPaneOption.getChildren().clear();
+        rootBorderPaneOption.setCenter(vBoxOption);
+    }
+
+    public void initVBoxMenu(){
         mainMenuVBox = new VBox();
 
-        btnStart = new Button("Start");
-        btnStart.getStyleClass().add("btn");
-        btnStart.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 20));
-
-
-        txtChoiceDifficulty = new Text("Choose your difficulty :");
-        txtChoiceDifficulty.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 20));
-
-
-
-        cbChoiceDifficulty = new ChoiceBox(FXCollections.observableArrayList("Easy","Medium","Hard"));
-        cbChoiceDifficulty.getSelectionModel().selectFirst();
-        cbChoiceDifficulty.getStyleClass().add("btn");
+        mainTitle = initTitle("MineSweeper");
+        btnStart = initButton("Start");
+        btnOption = initButton("Option");
+        btnTableauDesScore = initButton("Table Score");
+        btnExit = initButton("Exit");
 
 
 
-        btnTableauDesScore = new Button("Tableau des Scores");
-        btnTableauDesScore.getStyleClass().add("btn");
-        btnTableauDesScore.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 20));
+        mainMenuVBox.setAlignment(Pos.TOP_CENTER);
+        VBox.setMargin(mainTitle,new Insets(75,0,50,0));
+        mainMenuVBox.setSpacing(25);
 
-
-        btnExit = new Button("Exit");
-        btnExit.getStyleClass().add("btn");
-        btnExit.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 20));
-
+        mainMenuVBox.getChildren().add(mainTitle);
 
         mainMenuVBox.getChildren().add(btnStart);
-        mainMenuVBox.getChildren().add(txtChoiceDifficulty);
-        mainMenuVBox.getChildren().add(cbChoiceDifficulty);
+        mainMenuVBox.getChildren().add(btnOption);
         mainMenuVBox.getChildren().add(btnTableauDesScore);
         mainMenuVBox.getChildren().add(btnExit);
 
-        mainMenuVBox.setAlignment(Pos.TOP_CENTER);
-        mainMenuVBox.setPadding(new Insets(100,0,0,0));
-        mainMenuVBox.setSpacing(25);
-
-        parallax = model.parallax.getRoot();
-        model.parallax.initSize(root.getHeight());
-
-        root.getChildren().clear();
-        root.getChildren().add(parallax);
-        root.setTop(mainTitle);
-        root.setCenter(mainMenuVBox);
-
+        rootBorderPaneMenu.getChildren().clear();
+        rootBorderPaneMenu.setCenter(mainMenuVBox);
 
 
     }
 
+    public Text initTitle(String text){
+        Text t = new Text(text);
+        t.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 50));
+        t.setFill(Color.WHITE);
+        t.setRotate(17);
+        BorderPane.setAlignment(t,Pos.CENTER);
+        return t;
+    }
+
+    public Button initButton(String text){
+        Button b = new Button(text);
+        b.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 20));
+        b.getStyleClass().add("btn");
+        return b;
+    }
+
+
     public void setEvents(ControllerMenu controllerMenu){
         btnStart.setOnMouseClicked(controllerMenu);
+        btnOption.setOnMouseClicked(controllerMenu);
+        btnExit.setOnMouseClicked(controllerMenu);
+        btnRetourOption.setOnMouseClicked(controllerMenu);
 
-        for(Node node:root.getChildren()){
+
+        for(Node node: rootBorderPaneMenu.getChildren()){
             node.setOnMouseMoved(controllerMenu);
         }
         for(Node node:mainMenuVBox.getChildren()){
+            node.setOnMouseMoved(controllerMenu);
+        }
+        for(Node node:vBoxOption.getChildren()){
+            node.setOnMouseMoved(controllerMenu);
+        }
+
+        for(Node node:slider.getChildren()){
             node.setOnMouseMoved(controllerMenu);
         }
 
@@ -104,5 +148,15 @@ public class ViewMenuPrincipal {
 
     public Button getBtnStart() {
         return btnStart;
+    }
+
+    public Button getBtnRetourOption(){
+        return btnRetourOption;
+    }
+
+    public Button getBtnOption(){return btnOption;}
+
+    public HBox getSlider() {
+        return slider;
     }
 }

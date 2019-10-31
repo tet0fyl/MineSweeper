@@ -128,7 +128,6 @@ public class Plateau{
     }
 
     public void caseDiscoverStyling(Button btn){
-        btn.setTextFill(Color.BLACK);
     }
 
     public void setVoirLePlacementDesBombe(boolean bool){

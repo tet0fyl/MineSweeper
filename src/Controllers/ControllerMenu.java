@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Menu;
+import Models.Slider;
 import Views.ViewHandler;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -15,7 +16,7 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
 
 
         launcher.setEventHandlerMenu(this);
-
+        model.startToFollowTheMenu(launcher.getViewMenuPrincipal().getSlider());
     }
 
     @Override
@@ -29,10 +30,19 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
             if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnExit())){
                 launcher.getStage().close();
             }
+
+            if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnOption())){
+                model.slider.transition(Slider.next);
+            }
+
+            if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnRetourOption())){
+                model.slider.transition(Slider.previous);
+            }
         }
 
-
         model.parallax.move(mouseEvent.getSceneX(),mouseEvent.getSceneY());
+        System.out.println("X : " + mouseEvent.getSceneX());
+        System.out.println("Y : " + mouseEvent.getSceneY());
 
 
     }

@@ -6,24 +6,27 @@ import Models.Timer;
 import Tool.Path;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 
 public class ViewGame {
 
     private ModelGame model;
+    private BorderPane rootBroderPane;
     private BorderPane root;
     private ImageView imgBomb;
     private Text txtNbBombe,timer;
     private GridPane plateauGUI;
     private HBox hBoxStatusBar, hBoxBottom;
     private Button btnRetour;
+    ImageView imgBg;
 
     public ViewGame(BorderPane root, ModelGame model){
         this.root = root;
@@ -35,13 +38,11 @@ public class ViewGame {
         imgBomb.setFitHeight(50);
         imgBomb.setFitWidth(50);
 
-        timer = new Text();
+        timer = initText("00:00");
         this.model.timer = new Timer(timer) ;
-        timer.setFont(Font.font(30));
-        timer.setTextAlignment(TextAlignment.RIGHT);
-        //HBox.setMargin(timer,new Insets(0,0,0,200));
+        HBox.setMargin(timer,new Insets(0,0,0,300));
 
-        txtNbBombe = new Text(String.valueOf(model.getPlateau().getNbBombe()));
+        txtNbBombe = initText(String.valueOf(model.getPlateau().getNbBombe()));
 
         hBoxStatusBar.setPadding(new Insets(15, 12, 15, 12));
         hBoxStatusBar.setSpacing(20);
@@ -54,17 +55,47 @@ public class ViewGame {
         plateauGUI=model.getPlateau().getPlateauGUI();
         plateauGUI.setAlignment(Pos.CENTER);
 
-        btnRetour = new Button("RETOUR");
+        btnRetour = initButton("Retour");
         hBoxBottom.getChildren().add(btnRetour);
         hBoxBottom.setAlignment(Pos.CENTER);
 
-        root.getChildren().clear();
-        root.setTop(hBoxStatusBar);
-        root.setCenter(plateauGUI);
-        root.setBottom(hBoxBottom);
+        initBgImg();
+
+        clearAndInitRoot();
 
 
     }
+
+    public void clearAndInitRoot(){
+        root.getChildren().clear();
+        root.getChildren().add(imgBg);
+        root.setTop(hBoxStatusBar);
+        root.setCenter(plateauGUI);
+        root.setBottom(hBoxBottom);
+    }
+
+    public Text initText(String text){
+        Text t = new Text(text);
+        t.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 35));
+        t.setFill(Color.WHITE);
+        BorderPane.setAlignment(t,Pos.CENTER);
+        return t;
+    }
+
+    public Button initButton(String text){
+        Button b = new Button(text);
+        b.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 20));
+        b.getStyleClass().add("btn");
+        return b;
+    }
+
+    public void initBgImg(){
+        imgBg = new ImageView(Path.urlMainBg);
+        imgBg.setFitHeight(root.getHeight());
+        imgBg.setPreserveRatio(true);
+    }
+
+
 
     public void setEvents(ControllerGame controllerGame){
 
