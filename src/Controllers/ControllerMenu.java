@@ -32,17 +32,23 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
             }
 
             if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnOption())){
-                model.slider.transition(Slider.next);
+                model.slider.transition(Slider.seconde);
+            }
+
+            if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnTableauDesScore())){
+                model.slider.transition(Slider.third);
             }
 
             if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnRetourOption())){
-                model.slider.transition(Slider.previous);
+                model.slider.transition(Slider.main);
+            }
+
+            if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnRetourScore())){
+                model.slider.transition(Slider.main);
             }
         }
 
         model.parallax.move(mouseEvent.getSceneX(),mouseEvent.getSceneY());
-        System.out.println("X : " + mouseEvent.getSceneX());
-        System.out.println("Y : " + mouseEvent.getSceneY());
 
 
     }

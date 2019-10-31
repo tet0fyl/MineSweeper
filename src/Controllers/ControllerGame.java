@@ -41,6 +41,7 @@ public class ControllerGame implements EventHandler<MouseEvent> {
                 launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getExplosionGif());
                 launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getScreenBreak());
                 modelGame.getExplosion().start();
+                modelGame.getPlateau().caseDiscoveredAllGameOver(launcher.getViewGame().getPlateauGUI());
                 modelGame.timer.stop();
 
 

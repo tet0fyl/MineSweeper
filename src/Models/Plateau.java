@@ -127,7 +127,24 @@ public class Plateau{
 
     }
 
+    public void caseDiscoveredAllGameOver(GridPane grid){
+        for (int i = 0; i < this.plateau.length; i++) {
+            for (int j = 0; j < this.plateau[i].length; j++) {
+                Button nextBtn = (Button) getNodeFromGridPane(grid, i, j);
+                if(jaiUneBombe(i,j)){
+                    caseDiscoverBomb(grid,i,j);
+                }else{
+                    nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(i, j)));
+                }
+                caseDiscoverStyling(nextBtn);
+
+            }
+        }
+
+    }
+
     public void caseDiscoverStyling(Button btn){
+
     }
 
     public void setVoirLePlacementDesBombe(boolean bool){

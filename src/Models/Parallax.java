@@ -93,6 +93,7 @@ public class Parallax {
         panel2.setX((panel2.getX()/2 - (x*coef2)));
         panel3.setX((panel3.getX()/2 - (x*coef3)));
         panel4.setX((panel4.getX()/2 - (x*coef4)));
+        System.out.println(panel1.getX());
     }
 
 
@@ -102,5 +103,9 @@ public class Parallax {
      */
     public Group getRoot() {
         return root;
+    }
+
+    public ImageView getPanel1() {
+        return panel1;
     }
 }

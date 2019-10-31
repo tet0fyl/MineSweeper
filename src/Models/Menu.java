@@ -9,7 +9,7 @@ public class Menu {
     public Slider slider = new Slider();
     public AnimationTimer followTheMenu;
 
-    private double memoryXTranslation;
+    private double memoryXTranslation = 0;
 
     public Menu(){
         parallax = new Parallax(Path.urlParallaxBg);
@@ -25,8 +25,8 @@ public class Menu {
                 if(memoryXTranslation != targetX.getTranslateX()){
                     parallax.followXSecondaryTarget(-1*targetX.getTranslateX());
                     memoryXTranslation = targetX.getTranslateX();
-
                 }
+                System.out.println(parallax.getPanel1().getX());
             }
         };
         followTheMenu.start();

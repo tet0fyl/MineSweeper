@@ -17,12 +17,12 @@ import javafx.scene.text.Text;
 
 
 public class ViewMenuPrincipal {
-    private BorderPane rootBorderPaneMenu, rootBorderPaneOption;
+    private BorderPane rootBorderPaneMenu, rootBorderPaneOption,rootBorderPaneScore;
     private BorderPane root;
     private Menu model;
-    private Text mainTitle,mainTitleOption;
-    private Button btnStart,btnTableauDesScore,btnOption,btnExit,btnRetourOption;
-    private VBox mainMenuVBox, vBoxOption;
+    private Text mainTitle,mainTitleOption, textTitleScore;
+    private Button btnStart,btnTableauDesScore,btnOption,btnExit,btnRetourOption, btnRetourScore;
+    private VBox mainMenuVBox, vBoxOption, vBoxScore;
     private HBox slider;
     private Group parallax;
 
@@ -33,9 +33,12 @@ public class ViewMenuPrincipal {
         this.model = model;
         rootBorderPaneMenu = new BorderPane();
         rootBorderPaneOption = new BorderPane();
+        rootBorderPaneScore = new BorderPane();
 
         initVBoxMenu();
         initVBoxOption();
+        initVBoxScore();
+
         initParallax();
 
         clearAndInitRoot();
@@ -45,7 +48,7 @@ public class ViewMenuPrincipal {
     public void clearAndInitRoot(){
         root.getChildren().add(parallax);
 
-        slider = model.slider.initSlider(root,rootBorderPaneMenu,rootBorderPaneOption);
+        slider = model.slider.initSlider(root,rootBorderPaneMenu,rootBorderPaneOption, rootBorderPaneScore);
         root.getChildren().add(slider);
 
     }
@@ -54,6 +57,24 @@ public class ViewMenuPrincipal {
 
         parallax = model.parallax.getRoot();
         model.parallax.initSize(600);
+    }
+
+    public void initVBoxScore(){
+        vBoxScore = new VBox();
+
+        textTitleScore = initTitle("Table Score");
+
+        btnRetourScore = initButton("Retour");
+
+        vBoxScore.getChildren().add(textTitleScore);
+        vBoxScore.getChildren().add(btnRetourScore);
+
+        vBoxScore.setAlignment(Pos.TOP_CENTER);
+        VBox.setMargin(textTitleScore,new Insets(75,0,50,0));
+        vBoxScore.setSpacing(25);
+
+        rootBorderPaneScore.getChildren().clear();
+        rootBorderPaneScore.setCenter(vBoxScore);
     }
 
     public void initVBoxOption(){
@@ -123,7 +144,9 @@ public class ViewMenuPrincipal {
         btnStart.setOnMouseClicked(controllerMenu);
         btnOption.setOnMouseClicked(controllerMenu);
         btnExit.setOnMouseClicked(controllerMenu);
+        btnTableauDesScore.setOnMouseClicked(controllerMenu);
         btnRetourOption.setOnMouseClicked(controllerMenu);
+        btnRetourScore.setOnMouseClicked(controllerMenu);
 
 
         for(Node node: rootBorderPaneMenu.getChildren()){
@@ -155,6 +178,14 @@ public class ViewMenuPrincipal {
     }
 
     public Button getBtnOption(){return btnOption;}
+
+    public Button getBtnTableauDesScore() {
+        return btnTableauDesScore;
+    }
+
+    public Button getBtnRetourScore() {
+        return btnRetourScore;
+    }
 
     public HBox getSlider() {
         return slider;
