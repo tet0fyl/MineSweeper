@@ -23,25 +23,30 @@ public class ControllerGame implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-        Node node = (Node) mouseEvent.getSource();
-        Integer getX = GridPane.getColumnIndex(node);
-        Integer getY = GridPane.getRowIndex(node);
-
-
-        System.out.println("Clique en X : " + getX + " et Y : " + getY);
-
-        if(modelGame.getPlateau().jaiUneBombe(getX,getY)){
-            modelGame.getPlateau().caseDiscoverBomb(launcher.getViewGame().getPlateauGUI(),getX,getY);
-            modelGame.getExplosion().prepare(launcher.squareSizeScene);
-            launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getExplosionGif());
-            launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getScreenBreak());
-            modelGame.getExplosion().start();
-            modelGame.timer.stop();
-
-
-        }else{
-            modelGame.getPlateau().startWaveDetection(launcher.getViewGame().getPlateauGUI(),getX,getY);
+        if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetour())){
+            launcher.launchMenu();
         }
+
+        try{
+            Node node = (Node) mouseEvent.getSource();
+            Integer getX = GridPane.getColumnIndex(node);
+            Integer getY = GridPane.getRowIndex(node);
+
+
+            System.out.println("Clique en X : " + getX + " et Y : " + getY);
+
+            if(modelGame.getPlateau().jaiUneBombe(getX,getY)){
+                modelGame.getPlateau().caseDiscoverBomb(launcher.getViewGame().getPlateauGUI(),getX,getY);
+                modelGame.getExplosion().prepare(launcher.squareSizeScene);
+                launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getExplosionGif());
+                launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getScreenBreak());
+                modelGame.getExplosion().start();
+                modelGame.timer.stop();
+
+
+            }else{
+                modelGame.getPlateau().startWaveDetection(launcher.getViewGame().getPlateauGUI(),getX,getY);
+            }
 
 
 
@@ -54,6 +59,10 @@ public class ControllerGame implements EventHandler<MouseEvent> {
         byte getY = Byte.parseByte(getId.split(",")[1]);
         System.out.println("X :" + getX);
         System.out.println("Y :" + getY);*/
+
+        }catch (NullPointerException e){
+            System.out.println(mouseEvent.getSource());
+        }
 
 
     }

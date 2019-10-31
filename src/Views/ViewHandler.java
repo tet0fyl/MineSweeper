@@ -1,9 +1,10 @@
 package Views;
 
 import Controllers.ControllerGame;
+import Controllers.ControllerMenu;
+import Models.Menu;
 import Models.ModelGame;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -15,6 +16,9 @@ public class ViewHandler extends Application {
     private ModelGame modelGame;
     private ViewGame viewGame;
     private ControllerGame controllerGame;
+    private Menu modelMenu;
+    private ViewMenuPrincipal viewMenuPrincipal;
+    private ControllerMenu controllerMenu;
     public int squareSizeScene = 600;
 
 
@@ -24,7 +28,7 @@ public class ViewHandler extends Application {
         root=new BorderPane();
         scene= new Scene(root,squareSizeScene,squareSizeScene);
 
-        launchGame();
+        launchMenu();
 
         scene.getStylesheets().add("Asset/css/style.css");
         stage.setScene(scene);
@@ -35,6 +39,7 @@ public class ViewHandler extends Application {
     public void setEventHandlerGame(ControllerGame controllerGame){
         viewGame.setEvents(controllerGame);
     }
+    public void setEventHandlerMenu(ControllerMenu controllerMenu){viewMenuPrincipal.setEvents(controllerMenu);}
 
     public void launchGame(){
         modelGame = new ModelGame();
@@ -42,8 +47,20 @@ public class ViewHandler extends Application {
         controllerGame = new ControllerGame(this,modelGame);
     }
 
+    public void launchMenu(){
+        modelMenu = new Menu();
+        viewMenuPrincipal = new ViewMenuPrincipal(root, modelMenu);
+        controllerMenu = new ControllerMenu(this,modelMenu);
+
+    }
+
     public ViewGame getViewGame(){
         return viewGame;
     }
+    public ViewMenuPrincipal getViewMenuPrincipal(){return viewMenuPrincipal;}
 
+
+    public Stage getStage() {
+        return stage;
+    }
 }

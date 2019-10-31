@@ -7,10 +7,12 @@ import Tool.Path;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 
 public class ViewGame {
@@ -20,13 +22,14 @@ public class ViewGame {
     private ImageView imgBomb;
     private Text txtNbBombe,timer;
     private GridPane plateauGUI;
-    private HBox hBoxStatusBar;
-    private VBox vBoxFace;
+    private HBox hBoxStatusBar, hBoxBottom;
+    private Button btnRetour;
 
     public ViewGame(BorderPane root, ModelGame model){
         this.root = root;
         this.model = model;
         hBoxStatusBar=new HBox();
+        hBoxBottom = new HBox();
 
         imgBomb = new ImageView(Path.urlBombImg);
         imgBomb.setFitHeight(50);
@@ -35,7 +38,8 @@ public class ViewGame {
         timer = new Text();
         this.model.timer = new Timer(timer) ;
         timer.setFont(Font.font(30));
-        HBox.setMargin(timer,new Insets(0,0,0,200));
+        timer.setTextAlignment(TextAlignment.RIGHT);
+        //HBox.setMargin(timer,new Insets(0,0,0,200));
 
         txtNbBombe = new Text(String.valueOf(model.getPlateau().getNbBombe()));
 
@@ -48,18 +52,27 @@ public class ViewGame {
         hBoxStatusBar.getChildren().add(timer);
 
         plateauGUI=model.getPlateau().getPlateauGUI();
+        plateauGUI.setAlignment(Pos.CENTER);
+
+        btnRetour = new Button("RETOUR");
+        hBoxBottom.getChildren().add(btnRetour);
+        hBoxBottom.setAlignment(Pos.CENTER);
 
         root.getChildren().clear();
         root.setTop(hBoxStatusBar);
         root.setCenter(plateauGUI);
+        root.setBottom(hBoxBottom);
 
 
     }
 
     public void setEvents(ControllerGame controllerGame){
 
-        for(Node node : plateauGUI.getChildren())
+        for(Node node : plateauGUI.getChildren()){
             node.setOnMouseClicked(controllerGame);
+        }
+
+        btnRetour.setOnMouseClicked(controllerGame);
     }
 
     public GridPane getPlateauGUI() {
@@ -68,6 +81,10 @@ public class ViewGame {
 
     public Text getTimer() {
         return timer;
+    }
+
+    public Button getBtnRetour() {
+        return btnRetour;
     }
 
     public BorderPane getRoot() {
