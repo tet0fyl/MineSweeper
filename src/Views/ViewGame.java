@@ -30,7 +30,7 @@ public class ViewGame {
     private VBox vBoxGameOverPopUp;
     private TextField strPseudo;
     private Button btnRetourMenu;
-    private Text txtGameOver, txtEntrerVotreNom;
+    private Text txtGameOver, txtWin, txtEntrerVotreNom;
 
     public ViewGame(BorderPane root, ModelGame model){
         this.root = root;
@@ -75,28 +75,39 @@ public class ViewGame {
 
     }
 
+    public void initVBoxWinPopUp(){
+        vBoxGameOverPopUp = new VBox();
+
+        btnRetourMenu = initButton("Retour au Menu");
+
+        txtGameOver = initTitle("GAME OVER");
+
+        vBoxGameOverPopUp.getChildren().add(btnRetourMenu);
+        vBoxGameOverPopUp.getChildren().add(txtGameOver);
+
+        vBoxGameOverPopUp.setAlignment(Pos.TOP_CENTER);
+        vBoxGameOverPopUp.setMinWidth(600);
+        VBox.setMargin(txtGameOver,new Insets(250,0,50,0));
+        vBoxGameOverPopUp.setSpacing(25);
+
+        gameOverPopUp.getChildren().clear();
+        gameOverPopUp.setCenter(vBoxGameOverPopUp);
+    }
+
 
     public void initVBoxGameOverPopUp(){
         vBoxGameOverPopUp = new VBox();
 
+        btnRetourMenu = initButton("Retour au Menu");
+
         txtGameOver = initTitle("GAME OVER");
 
-        txtEntrerVotreNom = initText("Entrez votre nom :");
-
-        strPseudo = new TextField();
-        strPseudo.setPrefWidth(100d);
-        strPseudo.setPromptText("AAA");
-
-        btnRetourMenu = initButton("Continuer");
-
-        vBoxGameOverPopUp.getChildren().add(txtGameOver);
-        vBoxGameOverPopUp.getChildren().add(txtEntrerVotreNom);
-        vBoxGameOverPopUp.getChildren().add(strPseudo);
         vBoxGameOverPopUp.getChildren().add(btnRetourMenu);
+        vBoxGameOverPopUp.getChildren().add(txtGameOver);
 
         vBoxGameOverPopUp.setAlignment(Pos.TOP_CENTER);
         vBoxGameOverPopUp.setMinWidth(600);
-        VBox.setMargin(txtGameOver,new Insets(125,0,50,0));
+        VBox.setMargin(txtGameOver,new Insets(250,0,50,0));
         vBoxGameOverPopUp.setSpacing(25);
 
         gameOverPopUp.getChildren().clear();

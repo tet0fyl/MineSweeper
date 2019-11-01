@@ -15,6 +15,7 @@ public class Slider {
     public static final String main = "m";
     public static final String seconde = "s";
     public static final String third = "t";
+    private double targetPosition;
 
     private Timeline timelimeReset = new Timeline();
     private Timeline timelineSecond = new Timeline();
@@ -52,10 +53,13 @@ public class Slider {
     public void transition(String direction){
 
         if (direction.equals(seconde)){
+            targetPosition= mainContainerWidth*-1;
             animationTimelineSecondPanel();
         }else if (direction.equals(third)){
+            targetPosition= mainContainerWidth*2*-1;
             animationTimelineNextThirdPanel();
         }else{
+            targetPosition=0;
             animationTimelineMain();
         }
 
@@ -66,7 +70,7 @@ public class Slider {
         timelimeReset.stop();
         timelineThird.stop();
         timelineSecond.getKeyFrames().addAll(
-                new KeyFrame(new Duration(1000),new KeyValue(containerSlide.translateXProperty(),(mainContainerWidth*-1),Interpolator.EASE_IN))
+                new KeyFrame(new Duration(1000),new KeyValue(containerSlide.translateXProperty(),targetPosition))
         );
         timelineSecond.setCycleCount(1);
 
@@ -78,7 +82,7 @@ public class Slider {
         timelineSecond.stop();
         timelineThird.stop();
         timelimeReset.getKeyFrames().addAll(
-                new KeyFrame(new Duration(1000),new KeyValue(containerSlide.translateXProperty(),0, Interpolator.EASE_IN))
+                new KeyFrame(new Duration(1000),new KeyValue(containerSlide.translateXProperty(),0))
         );
         timelimeReset.setCycleCount(1);
 
@@ -89,10 +93,9 @@ public class Slider {
         timelineSecond.stop();
         timelimeReset.stop();
         timelineThird.getKeyFrames().addAll(
-                new KeyFrame(new Duration(1000),new KeyValue(containerSlide.translateXProperty(),-1*2*mainContainerWidth, Interpolator.EASE_IN))
+                new KeyFrame(new Duration(1000),new KeyValue(containerSlide.translateXProperty(),targetPosition))
         );
         timelineThird.setCycleCount(1);
-
         timelineThird.play();
     }
 

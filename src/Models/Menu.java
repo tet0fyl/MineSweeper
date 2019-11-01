@@ -18,6 +18,8 @@ public class Menu {
     public AnimationTimer followTheMenu;
     public Path fileScore;
     private List<String> listScore;
+    private String difficulty;
+
 
     private double memoryXTranslation = 0;
 
@@ -33,10 +35,6 @@ public class Menu {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for(String champs: listScore){
-            System.out.println(champs);
-        }
-        System.out.println(listScore);
     }
 
     public void startToFollowTheMenu(HBox targetX){
@@ -58,5 +56,9 @@ public class Menu {
 
     public List<String> getListScore() {
         return listScore;
+    }
+
+    public void setDifficulty(String difficulty) {
+         this.difficulty = difficulty;
     }
 }

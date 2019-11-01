@@ -4,6 +4,7 @@ import Controllers.ControllerGame;
 import Controllers.ControllerMenu;
 import Models.Menu;
 import Models.ModelGame;
+import Models.Plateau;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -21,6 +22,7 @@ public class ViewHandler extends Application {
     private ViewMenuPrincipal viewMenuPrincipal;
     private ControllerMenu controllerMenu;
     public int squareSizeScene = 600;
+    private String difficulty = Plateau.FACILE;
 
 
     @Override
@@ -31,7 +33,9 @@ public class ViewHandler extends Application {
 
         launchMenu();
 
-        scene.getStylesheets().add("Asset/css/style.css");
+        root.getStylesheets().add("Asset/css/style.css");
+
+
         stage.setScene(scene);
         stage.show();
 
@@ -43,7 +47,7 @@ public class ViewHandler extends Application {
     public void setEventHandlerMenu(ControllerMenu controllerMenu){viewMenuPrincipal.setEvents(controllerMenu);}
 
     public void launchGame(){
-        modelGame = new ModelGame();
+        modelGame = new ModelGame(difficulty);
         viewGame = new ViewGame(root, modelGame);
         controllerGame = new ControllerGame(this,modelGame);
     }
@@ -63,5 +67,13 @@ public class ViewHandler extends Application {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public ControllerGame getControllerGame() {
+        return controllerGame;
+    }
+
+    public void setDifficulty(String difficulte) {
+        this.difficulty = difficulte;
     }
 }

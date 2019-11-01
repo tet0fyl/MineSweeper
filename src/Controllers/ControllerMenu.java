@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Menu;
+import Models.Plateau;
 import Models.Slider;
 import Views.ViewHandler;
 import javafx.event.EventHandler;
@@ -14,7 +15,6 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
         this.model = menu;
         this.launcher=launcher;
 
-
         launcher.setEventHandlerMenu(this);
         model.startToFollowTheMenu(launcher.getViewMenuPrincipal().getSlider());
     }
@@ -22,7 +22,6 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
 
-        if(mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
             if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnStart())){
                 model.stopToFollowTheMenu();
                 launcher.launchGame();
@@ -47,7 +46,43 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
             if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnRetourScore())){
                 model.slider.transition(Slider.main);
             }
-        }
+
+            if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnEasy())){
+                launcher.setDifficulty(Plateau.FACILE);
+
+                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().remove("btnOptionPressed");
+                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().remove("btnOptionPressed");
+
+
+                launcher.getViewMenuPrincipal().getBtnEasy().getStyleClass().add("btnOptionPressed");
+                launcher.getViewMenuPrincipal().getBtnMedium().getStyleClass().add("btn-secondary");
+                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().add("btn-secondary");
+            }
+
+            if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnMedium())){
+                launcher.setDifficulty(Plateau.NORMAL);
+
+                launcher.getViewMenuPrincipal().getBtnEasy().getStyleClass().remove("btnOptionPressed");
+                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().remove("btnOptionPressed");
+
+
+                launcher.getViewMenuPrincipal().getBtnMedium().getStyleClass().add("btnOptionPressed");
+                launcher.getViewMenuPrincipal().getBtnEasy().getStyleClass().add("btn-secondary");
+                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().add("btn-secondary");
+            }
+
+            if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnHard())){
+                launcher.setDifficulty(Plateau.DIFFICILE);
+
+                launcher.getViewMenuPrincipal().getBtnEasy().getStyleClass().remove("btnOptionPressed");
+                launcher.getViewMenuPrincipal().getBtnMedium().getStyleClass().remove("btnOptionPressed");
+
+
+                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().add("btnOptionPressed");
+                launcher.getViewMenuPrincipal().getBtnMedium().getStyleClass().add("btn-secondary");
+                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().add("btn-secondary");
+            }
+
 
         //model.parallax.move(mouseEvent.getSceneX(),mouseEvent.getSceneY());
 

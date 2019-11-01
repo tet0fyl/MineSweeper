@@ -2,11 +2,11 @@ package Views;
 
 import Controllers.ControllerMenu;
 import Models.Menu;
+import Models.Plateau;
 import Tool.PathCst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -21,8 +21,8 @@ public class ViewMenuPrincipal {
     private BorderPane rootBorderPaneMenu, rootBorderPaneOption,rootBorderPaneScore;
     private BorderPane root;
     private Menu model;
-    private Text mainTitle,mainTitleOption, textTitleScore;
-    private Button btnStart,btnTableauDesScore,btnOption,btnExit,btnRetourOption, btnRetourScore;
+    private Text mainTitle,mainTitleOption, textTitleScore,txtChooseDifficulty;
+    private Button btnStart,btnTableauDesScore,btnOption,btnExit,btnRetourOption, btnRetourScore, btnEasy,btnMedium,btnHard;
     private VBox mainMenuVBox, vBoxOption, vBoxScore;
     private HBox slider;
     private Group parallax;
@@ -48,6 +48,7 @@ public class ViewMenuPrincipal {
     }
 
     public void clearAndInitRoot(){
+        root.getChildren().clear();
         root.getChildren().add(parallax);
 
         slider = model.slider.initSlider(root,rootBorderPaneMenu,rootBorderPaneOption, rootBorderPaneScore);
@@ -105,9 +106,27 @@ public class ViewMenuPrincipal {
 
         mainTitleOption = initTitle("Option");
 
+        txtChooseDifficulty = initText("Choose the difficulty :");
+
+        HBox hbox = new HBox();
+
+        btnEasy = initButton(Plateau.FACILE);
+        btnMedium = initButtonSecondary(Plateau.NORMAL);
+        btnHard = initButtonSecondary(Plateau.DIFFICILE);
+
+        hbox.getChildren().add(btnEasy);
+        hbox.getChildren().add(btnMedium);
+        hbox.getChildren().add(btnHard);
+        HBox.setMargin(btnEasy,new Insets(0,10,0,0));
+        HBox.setMargin(btnMedium,new Insets(0,10,0,0));
+        HBox.setMargin(btnHard,new Insets(0,10,0,0));
+        hbox.setAlignment(Pos.CENTER);
+
         btnRetourOption = initButton("Retour");
 
         vBoxOption.getChildren().add(mainTitleOption);
+        vBoxOption.getChildren().add(txtChooseDifficulty);
+        vBoxOption.getChildren().add(hbox);
         vBoxOption.getChildren().add(btnRetourOption);
 
         vBoxOption.setAlignment(Pos.TOP_CENTER);
@@ -170,6 +189,13 @@ public class ViewMenuPrincipal {
         return b;
     }
 
+    public Button initButtonSecondary(String text){
+        Button b = new Button(text);
+        b.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(PathCst.fontSpongeBob), 20));
+        b.getStyleClass().add("btn-secondary");
+        return b;
+    }
+
 
     public void setEvents(ControllerMenu controllerMenu){
         btnStart.setOnMouseClicked(controllerMenu);
@@ -178,22 +204,9 @@ public class ViewMenuPrincipal {
         btnTableauDesScore.setOnMouseClicked(controllerMenu);
         btnRetourOption.setOnMouseClicked(controllerMenu);
         btnRetourScore.setOnMouseClicked(controllerMenu);
-
-
-        for(Node node: rootBorderPaneMenu.getChildren()){
-            node.setOnMouseMoved(controllerMenu);
-        }
-        for(Node node:mainMenuVBox.getChildren()){
-            node.setOnMouseMoved(controllerMenu);
-        }
-        for(Node node:vBoxOption.getChildren()){
-            node.setOnMouseMoved(controllerMenu);
-        }
-
-        for(Node node:slider.getChildren()){
-            node.setOnMouseMoved(controllerMenu);
-        }
-
+        btnEasy.setOnMouseClicked(controllerMenu);
+        btnMedium.setOnMouseClicked(controllerMenu);
+        btnHard.setOnMouseClicked(controllerMenu);
     }
 
     public void initParallax(){
@@ -222,6 +235,18 @@ public class ViewMenuPrincipal {
 
     public Button getBtnRetourScore() {
         return btnRetourScore;
+    }
+
+    public Button getBtnEasy() {
+        return btnEasy;
+    }
+
+    public Button getBtnMedium() {
+        return btnMedium;
+    }
+
+    public Button getBtnHard() {
+        return btnHard;
     }
 
     public HBox getSlider() {

@@ -23,21 +23,20 @@ public class ControllerGame implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
+
+
         if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetour())){
+            modelGame.timer.stopTimer();
             launcher.launchMenu();
         }
 
         if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetourMenu())){
             launcher.launchMenu();
         }
-
         try{
             Node node = (Node) mouseEvent.getSource();
             Integer getX = GridPane.getColumnIndex(node);
             Integer getY = GridPane.getRowIndex(node);
-
-
-            System.out.println("Clique en X : " + getX + " et Y : " + getY);
 
             if(modelGame.getPlateau().jaiUneBombe(getX,getY)){
                 modelGame.getPlateau().caseDiscoverBomb(launcher.getViewGame().getPlateauGUI(),getX,getY);
@@ -55,8 +54,6 @@ public class ControllerGame implements EventHandler<MouseEvent> {
                 modelGame.getPlateau().startWaveDetection(launcher.getViewGame().getPlateauGUI(),getX,getY);
             }
 
-
-
         /* -- J'etais parti au debut avec un systeme d'id sur les Button du GridPane du plateau
         mais cela m'a causer des bugs aleatoires, certain id étais null alors que l'objet ciblé en posedait bien
         J'ai decider d'utiliser une methode static plus performante proposer par l'objet Gridpane (voir juste en haut) --
@@ -71,7 +68,11 @@ public class ControllerGame implements EventHandler<MouseEvent> {
             System.out.println(mouseEvent.getSource());
         }
 
+        if(modelGame.getPlateau().isHeWinning(launcher.getViewGame().getPlateauGUI())){
+            System.out.println("Ta gagné mec !");
+        }else{
+            System.out.println("Ta pas encore gagné");
+        }
 
     }
-
 }

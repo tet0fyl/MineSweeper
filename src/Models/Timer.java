@@ -41,4 +41,8 @@ public class Timer extends AnimationTimer {
     public String getTime() {
         return result;
     }
+
+    public void stopTimer(){
+        this.stop();
+    }
 }

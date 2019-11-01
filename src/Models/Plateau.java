@@ -7,21 +7,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class Plateau{
-    static byte FACILE = 0;
-    static byte NORMAL = 1;
-    static byte DIFFICILE = 2;
+    public static String FACILE = "EASY";
+    public static String NORMAL = "MEDIUM";
+    public static String DIFFICILE = "HARD";
 
     Case plateau[][];
     GridPane plateauGUI;
     byte nbDeCase = 15;
     int nbBombe;
     int nbBombePlace;
-    byte modeDifficulte;
+    String modeDifficulte;
     boolean bombeCliquee;
     boolean voirLePlacementDesBombe = false;
     int caseSizeGUI = 30;
 
-    Plateau(byte modeDifficulte) {
+    Plateau(String modeDifficulte) {
         bombeCliquee = false;
         this.modeDifficulte = modeDifficulte;
         if (modeDifficulte == FACILE)
@@ -35,7 +35,7 @@ public class Plateau{
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
                 plateau[i][j] = new Case(false);
-                if (nbBombe>0 && Math.random() > 0.93) {
+                if (nbBombePlace>0 && Math.random() > 0.80) {
                     System.out.println("Il y a une bombe en x : " + i + " et y : " + j);
                     plateau[i][j].jaiUneBombe = true;
                     nbBombePlace--;
@@ -93,12 +93,6 @@ public class Plateau{
                 btn.setMinWidth(caseSizeGUI);
                 btn.setMinHeight(caseSizeGUI);
                 btn.getStyleClass().add("btn");
-
-
-                /* Affectation d'id que j'ai abandonner par la suite
-                btn.setId(i+","+j);
-                btn.setText("0");*/
-
                 g.add(btn,i,j);
             }
         }
@@ -136,20 +130,37 @@ public class Plateau{
                     nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(i, j)));
                 }
                 caseDiscoverStyling(nextBtn);
-
             }
         }
+    }
 
+    public boolean isHeWinning(GridPane grid){
+        int nbDeCaseDecouverte = 0;
+        for (int i = 0; i < this.plateau.length; i++) {
+            for (int j = 0; j < this.plateau[i].length; j++) {
+                Button nextBtn = (Button) getNodeFromGridPane(grid, i, j);
+                if(nextBtn.getText().equals("")){
+                    nbDeCaseDecouverte++;
+                }
+            }
+        }
+        System.out.println(nbDeCaseDecouverte);
+        System.out.println(nbBombe);
+        if(nbDeCaseDecouverte <= nbBombe){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public void caseDiscoverStyling(Button btn){
 
     }
 
-    public void setVoirLePlacementDesBombe(boolean bool){
-        voirLePlacementDesBombe = bool;
+    public void startWaveDetection(GridPane grid, int x , int y){
+        Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
+        caseDiscoverStyling(nextBtn);
     }
-
 
 
                              ////////////////////////////////////////
@@ -169,6 +180,7 @@ public class Plateau{
      *
      * Je serais curieux de voir la manière optimiser de le faire.
      */
+    /*
     /////////////////////////////////////////////////////////////////////////////////
 
     public void startWaveDetection(GridPane grid, int x , int y){
@@ -275,6 +287,8 @@ public class Plateau{
         }
     }
 
+
+
     private void xTargetLeftDetectionWave(GridPane grid, int x, int y) {
         x=x;
         y=y;
@@ -289,7 +303,7 @@ public class Plateau{
             }
         }
     }
-
+*/
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
@@ -300,4 +314,5 @@ public class Plateau{
     }
     /////////////////////////////////////////////////////////////////////////////////
                         ////////////////////////////////////////
+
 }
