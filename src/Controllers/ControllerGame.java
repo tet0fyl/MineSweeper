@@ -27,6 +27,10 @@ public class ControllerGame implements EventHandler<MouseEvent> {
             launcher.launchMenu();
         }
 
+        if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetourMenu())){
+            launcher.launchMenu();
+        }
+
         try{
             Node node = (Node) mouseEvent.getSource();
             Integer getX = GridPane.getColumnIndex(node);
@@ -43,6 +47,8 @@ public class ControllerGame implements EventHandler<MouseEvent> {
                 modelGame.getExplosion().start();
                 modelGame.getPlateau().caseDiscoveredAllGameOver(launcher.getViewGame().getPlateauGUI());
                 modelGame.timer.stop();
+                launcher.getViewGame().getBtnRetour().setOpacity(0);
+                launcher.getViewGame().getRoot().getChildren().add(launcher.getViewGame().getGameOverPopUp());
 
 
             }else{

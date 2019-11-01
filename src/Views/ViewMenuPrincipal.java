@@ -2,13 +2,14 @@ package Views;
 
 import Controllers.ControllerMenu;
 import Models.Menu;
-import Tool.Path;
+import Tool.PathCst;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -25,6 +26,7 @@ public class ViewMenuPrincipal {
     private VBox mainMenuVBox, vBoxOption, vBoxScore;
     private HBox slider;
     private Group parallax;
+    private GridPane scoreGrid = new GridPane();
 
 
 
@@ -53,20 +55,41 @@ public class ViewMenuPrincipal {
 
     }
 
-    public void initParallax(){
-
-        parallax = model.parallax.getRoot();
-        model.parallax.initSize(600);
-    }
-
     public void initVBoxScore(){
         vBoxScore = new VBox();
 
         textTitleScore = initTitle("Table Score");
+        for (int i = 0; i < model.getListScore().size() ; i++) {
+            String row = model.getListScore().get(i);
+            String pseudo = row.split(",")[0];
+            String difficulty = row.split(",")[1];
+            String time = row.split(",")[2];
+
+            Text txtPseudo = initText(pseudo);
+            Text txtDifficulty = initText(difficulty);
+            Text txtTime = initText(time);
+
+            if(i<1){
+                txtPseudo.setFill(Color.ORANGE);
+                txtDifficulty.setFill(Color.ORANGE);
+                txtTime.setFill(Color.ORANGE);
+            }else{
+
+            }
+
+            scoreGrid.add(txtPseudo,0,i);
+            scoreGrid.add(txtDifficulty,2,i);
+            scoreGrid.add(txtTime,3,i);
+
+        }
+
+        scoreGrid.setAlignment(Pos.CENTER);
+        scoreGrid.setHgap(20);
 
         btnRetourScore = initButton("Retour");
 
         vBoxScore.getChildren().add(textTitleScore);
+        vBoxScore.getChildren().add(scoreGrid);
         vBoxScore.getChildren().add(btnRetourScore);
 
         vBoxScore.setAlignment(Pos.TOP_CENTER);
@@ -125,16 +148,24 @@ public class ViewMenuPrincipal {
 
     public Text initTitle(String text){
         Text t = new Text(text);
-        t.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 50));
+        t.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(PathCst.fontSpongeBob), 50));
         t.setFill(Color.WHITE);
         t.setRotate(17);
         BorderPane.setAlignment(t,Pos.CENTER);
         return t;
     }
 
+    public Text initText(String text){
+        Text t = new Text(text);
+        t.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(PathCst.fontSpongeBob), 20));
+        t.setFill(Color.WHITE);
+        BorderPane.setAlignment(t,Pos.CENTER);
+        return t;
+    }
+
     public Button initButton(String text){
         Button b = new Button(text);
-        b.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(Path.fontSpongeBob), 20));
+        b.setFont(Font.loadFont(ViewMenuPrincipal.class.getResourceAsStream(PathCst.fontSpongeBob), 20));
         b.getStyleClass().add("btn");
         return b;
     }
@@ -163,6 +194,12 @@ public class ViewMenuPrincipal {
             node.setOnMouseMoved(controllerMenu);
         }
 
+    }
+
+    public void initParallax(){
+
+        parallax = model.parallax.getRoot();
+        model.parallax.initSize(600);
     }
 
     public Button getBtnExit() {

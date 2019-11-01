@@ -1,6 +1,6 @@
 package Models;
 
-import Tool.Path;
+import Tool.PathCst;
 import javafx.animation.AnimationTimer;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,8 +16,8 @@ public class Explosion extends AnimationTimer {
     }
 
     public void prepare(int size){
-        explosionGif = new ImageView(Path.urlExplosionGif);
-        screenBreakTmp = new Image(Path.urlScreenBreak);
+        explosionGif = new ImageView(PathCst.urlExplosionGif);
+        screenBreakTmp = new Image(PathCst.urlScreenBreak);
         explosionGif.setFitWidth(size);
         explosionGif.setFitHeight(size);
         screenBreak = new ImageView();

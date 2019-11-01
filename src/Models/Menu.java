@@ -1,21 +1,42 @@
 package Models;
 
-import Tool.Path;
+import Tool.PathCst;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.HBox;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
+
 
 public class Menu {
     public Parallax parallax;
     public Slider slider = new Slider();
     public AnimationTimer followTheMenu;
+    public Path fileScore;
+    private List<String> listScore;
 
     private double memoryXTranslation = 0;
 
     public Menu(){
-        parallax = new Parallax(Path.urlParallaxBg);
+        parallax = new Parallax(PathCst.urlParallaxBg);
+        requestCsvFile();
+    }
 
-
-
+    public void requestCsvFile(){
+        fileScore = Paths.get(PathCst.urlData);
+        try {
+            listScore = Files.readAllLines(fileScore);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(String champs: listScore){
+            System.out.println(champs);
+        }
+        System.out.println(listScore);
     }
 
     public void startToFollowTheMenu(HBox targetX){
@@ -26,9 +47,16 @@ public class Menu {
                     parallax.followXSecondaryTarget(-1*targetX.getTranslateX());
                     memoryXTranslation = targetX.getTranslateX();
                 }
-                System.out.println(parallax.getPanel1().getX());
             }
         };
         followTheMenu.start();
+    }
+
+    public void stopToFollowTheMenu(){
+        followTheMenu.stop();
+    }
+
+    public List<String> getListScore() {
+        return listScore;
     }
 }

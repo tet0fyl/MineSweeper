@@ -1,11 +1,10 @@
 package Models;
 
-import Tool.Path;
+import Tool.PathCst;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 
 public class Plateau{
     static byte FACILE = 0;
@@ -120,7 +119,7 @@ public class Plateau{
 
     public void caseDiscoverBomb(GridPane grid, int x, int y){
         Button btn = (Button)getNodeFromGridPane(grid,x,y);
-        ImageView imgBomb = new ImageView(Path.urlBombImg);
+        ImageView imgBomb = new ImageView(PathCst.urlBombImg);
         imgBomb.setFitWidth(caseSizeGUI-20);
         imgBomb.setFitHeight(caseSizeGUI-20);
         btn.setGraphic(imgBomb);

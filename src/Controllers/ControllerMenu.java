@@ -24,6 +24,7 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
 
         if(mouseEvent.getEventType().equals(MouseEvent.MOUSE_CLICKED)){
             if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnStart())){
+                model.stopToFollowTheMenu();
                 launcher.launchGame();
             }
 
@@ -48,7 +49,7 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
             }
         }
 
-        model.parallax.move(mouseEvent.getSceneX(),mouseEvent.getSceneY());
+        //model.parallax.move(mouseEvent.getSceneX(),mouseEvent.getSceneY());
 
 
     }
