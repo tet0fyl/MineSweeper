@@ -72,10 +72,6 @@ public class Plateau{
         return plateau[x][y].jaiUneBombe;
     }
 
-    public boolean partiePerdue() {
-        return bombeCliquee;
-    }
-
     public GridPane createLayerFromPlateau(){
         GridPane g = new GridPane();
         for (int i = 0; i < plateau.length; i++) {
@@ -97,14 +93,6 @@ public class Plateau{
             }
         }
         return g;
-    }
-
-    public GridPane getPlateauGUI() {
-        return plateauGUI;
-    }
-
-    public byte getNbDeCase() {
-        return nbDeCase;
     }
 
     public int getNbBombe(){
@@ -129,7 +117,6 @@ public class Plateau{
                 }else{
                     nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(i, j)));
                 }
-                caseDiscoverStyling(nextBtn);
             }
         }
     }
@@ -153,17 +140,11 @@ public class Plateau{
         }
     }
 
-    public void caseDiscoverStyling(Button btn){
-
+    public GridPane getPlateauGUI() {
+        return plateauGUI;
     }
 
-    public void startWaveDetection(GridPane grid, int x , int y){
-        Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
-        caseDiscoverStyling(nextBtn);
-    }
-
-
-                             ////////////////////////////////////////
+    ////////////////////////////////////////
     /**                         EXPLICATION DU CODE SUIVANT !
      * J'ai tenté un balayage depuis la source du clique des cases contenant 0 bombe dans le voisinage.
      *
@@ -178,9 +159,9 @@ public class Plateau{
      * qui parcourt toute les node du gridpane pour query le node), elle ne couvre pas toute les cases si le
      * chemin est un peu lézardeux et elle repasse plusieurs fois sur des cases déjà découverte.
      *
-     * Je serais curieux de voir la manière optimiser de le faire.
+     * Il faudrait que je cherche au niveau des methodes recursive
      */
-    /*
+
     /////////////////////////////////////////////////////////////////////////////////
 
     public void startWaveDetection(GridPane grid, int x , int y){
@@ -197,7 +178,6 @@ public class Plateau{
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
             xTargetRightDetectionWave(grid,x,y);
             xTargetLeftDetectionWave(grid,x,y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
@@ -211,7 +191,6 @@ public class Plateau{
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
             xTargetRightDetectionWave(grid,x,y);
             xTargetLeftDetectionWave(grid,x,y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
@@ -224,7 +203,6 @@ public class Plateau{
         y=y;
         for (; x < nbDeCase; x++) {
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
@@ -236,7 +214,6 @@ public class Plateau{
         y=y;
         for (; x >= 0; x--) {
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
@@ -250,7 +227,6 @@ public class Plateau{
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
             xRightSecondaryWave(grid,x,y);
             xLeftSecondaryWave(grid,x,y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
@@ -264,7 +240,6 @@ public class Plateau{
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
             xRightSecondaryWave(grid,x,y);
             xLeftSecondaryWave(grid,x,y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
@@ -279,7 +254,6 @@ public class Plateau{
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
             yAboveSecondaryWave(grid,x,y);
             yUnderSecondaryWave(grid,x,y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
@@ -296,14 +270,13 @@ public class Plateau{
             Button nextBtn = (Button) getNodeFromGridPane(grid, x, y);
             yAboveSecondaryWave(grid,x,y);
             yUnderSecondaryWave(grid,x,y);
-            caseDiscoverStyling(nextBtn);
             nextBtn.setText(String.valueOf(combienDeBombeDansMonVoisinage(x, y)));
             if (Integer.valueOf(nextBtn.getText()) > 0) {
                 break;
             }
         }
     }
-*/
+
     private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {
             if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {

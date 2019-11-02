@@ -13,7 +13,6 @@ public class Timer extends AnimationTimer {
     public Timer(Text textTimer){
         s=0;
         this.textTimer=textTimer;
-        this.start();
     }
 
     @Override
@@ -36,10 +35,6 @@ public class Timer extends AnimationTimer {
             textTimer.setText(result);
             lastUpdate=now;
         }
-    }
-
-    public String getTime() {
-        return result;
     }
 
     public void stopTimer(){

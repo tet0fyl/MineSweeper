@@ -24,6 +24,7 @@ public class ControllerGame implements EventHandler<MouseEvent> {
     @Override
     public void handle(MouseEvent mouseEvent) {
 
+        modelGame.timer.start();
 
         if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetour())){
             modelGame.timer.stopTimer();
@@ -50,28 +51,14 @@ public class ControllerGame implements EventHandler<MouseEvent> {
                 launcher.getViewGame().getRoot().getChildren().add(launcher.getViewGame().getGameOverPopUp());
 
 
+            }else if(modelGame.getPlateau().isHeWinning(launcher.getViewGame().getPlateauGUI())){
+                launcher.getViewGame().getRoot().getChildren().add(launcher.getViewGame().getWinPopUp());
             }else{
                 modelGame.getPlateau().startWaveDetection(launcher.getViewGame().getPlateauGUI(),getX,getY);
             }
 
-        /* -- J'etais parti au debut avec un systeme d'id sur les Button du GridPane du plateau
-        mais cela m'a causer des bugs aleatoires, certain id étais null alors que l'objet ciblé en posedait bien
-        J'ai decider d'utiliser une methode static plus performante proposer par l'objet Gridpane (voir juste en haut) --
-        String getId = mouseEvent.getPickResult().getIntersectedNode().getId();
-        System.out.println(getId);
-        byte getX = Byte.parseByte(getId.split(",")[0]);
-        byte getY = Byte.parseByte(getId.split(",")[1]);
-        System.out.println("X :" + getX);
-        System.out.println("Y :" + getY);*/
-
         }catch (NullPointerException e){
             System.out.println(mouseEvent.getSource());
-        }
-
-        if(modelGame.getPlateau().isHeWinning(launcher.getViewGame().getPlateauGUI())){
-            System.out.println("Ta gagné mec !");
-        }else{
-            System.out.println("Ta pas encore gagné");
         }
 
     }

@@ -1,6 +1,5 @@
 package Models;
 
-import java.io.Serializable;
 
 public class Case {
     boolean jaiUneBombe;

@@ -6,7 +6,6 @@ import Models.Menu;
 import Models.ModelGame;
 import Models.Plateau;
 import javafx.application.Application;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -67,10 +66,6 @@ public class ViewHandler extends Application {
 
     public Stage getStage() {
         return stage;
-    }
-
-    public ControllerGame getControllerGame() {
-        return controllerGame;
     }
 
     public void setDifficulty(String difficulte) {

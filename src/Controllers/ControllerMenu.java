@@ -50,7 +50,7 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
             if(mouseEvent.getSource().equals(launcher.getViewMenuPrincipal().getBtnEasy())){
                 launcher.setDifficulty(Plateau.FACILE);
 
-                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().remove("btnOptionPressed");
+                launcher.getViewMenuPrincipal().getBtnMedium().getStyleClass().remove("btnOptionPressed");
                 launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().remove("btnOptionPressed");
 
 
@@ -84,7 +84,6 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
             }
 
 
-        //model.parallax.move(mouseEvent.getSceneX(),mouseEvent.getSceneY());
 
 
     }

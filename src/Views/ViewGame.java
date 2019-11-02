@@ -26,11 +26,11 @@ public class ViewGame {
     private HBox hBoxStatusBar, hBoxBottom;
     private Button btnRetour;
     ImageView imgBg;
-    private BorderPane gameOverPopUp;
-    private VBox vBoxGameOverPopUp;
+    private BorderPane gameOverPopUp, winPopUp;
+    private VBox vBoxGameOverPopUp, vBoxWinpopUp;
     private TextField strPseudo;
     private Button btnRetourMenu;
-    private Text txtGameOver, txtWin, txtEntrerVotreNom;
+    private Text txtGameOver, txtWin;
 
     public ViewGame(BorderPane root, ModelGame model){
         this.root = root;
@@ -39,6 +39,7 @@ public class ViewGame {
         hBoxBottom = new HBox();
 
         gameOverPopUp = new BorderPane();
+        winPopUp = new BorderPane();
 
         initVBoxGameOverPopUp();
 
@@ -76,22 +77,22 @@ public class ViewGame {
     }
 
     public void initVBoxWinPopUp(){
-        vBoxGameOverPopUp = new VBox();
+        vBoxWinpopUp = new VBox();
 
         btnRetourMenu = initButton("Retour au Menu");
 
-        txtGameOver = initTitle("GAME OVER");
+        txtWin = initTitle("GAGNER !! ");
 
-        vBoxGameOverPopUp.getChildren().add(btnRetourMenu);
-        vBoxGameOverPopUp.getChildren().add(txtGameOver);
+        vBoxWinpopUp.getChildren().add(btnRetourMenu);
+        vBoxWinpopUp.getChildren().add(txtGameOver);
 
-        vBoxGameOverPopUp.setAlignment(Pos.TOP_CENTER);
-        vBoxGameOverPopUp.setMinWidth(600);
-        VBox.setMargin(txtGameOver,new Insets(250,0,50,0));
-        vBoxGameOverPopUp.setSpacing(25);
+        vBoxWinpopUp.setAlignment(Pos.TOP_CENTER);
+        vBoxWinpopUp.setMinWidth(600);
+        VBox.setMargin(txtWin,new Insets(250,0,50,0));
+        vBoxWinpopUp.setSpacing(25);
 
-        gameOverPopUp.getChildren().clear();
-        gameOverPopUp.setCenter(vBoxGameOverPopUp);
+        winPopUp.getChildren().clear();
+        winPopUp.setCenter(vBoxWinpopUp);
     }
 
 
@@ -114,9 +115,6 @@ public class ViewGame {
         gameOverPopUp.setCenter(vBoxGameOverPopUp);
     }
 
-    public BorderPane getGameOverPopUp() {
-        return gameOverPopUp;
-    }
 
     public void clearAndInitRoot(){
         root.getChildren().clear();
@@ -184,6 +182,14 @@ public class ViewGame {
 
     public BorderPane getRoot() {
         return root;
+    }
+
+    public BorderPane getGameOverPopUp() {
+        return gameOverPopUp;
+    }
+
+    public BorderPane getWinPopUp(){
+        return winPopUp;
     }
 
     public Button getBtnRetourMenu() {

@@ -4,7 +4,6 @@ import Tool.PathCst;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.HBox;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +17,6 @@ public class Menu {
     public AnimationTimer followTheMenu;
     public Path fileScore;
     private List<String> listScore;
-    private String difficulty;
 
 
     private double memoryXTranslation = 0;
@@ -58,7 +56,4 @@ public class Menu {
         return listScore;
     }
 
-    public void setDifficulty(String difficulty) {
-         this.difficulty = difficulty;
-    }
 }
