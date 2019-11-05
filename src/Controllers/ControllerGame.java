@@ -40,6 +40,7 @@ public class ControllerGame implements EventHandler<MouseEvent> {
             Integer getY = GridPane.getRowIndex(node);
 
             if(modelGame.getPlateau().jaiUneBombe(getX,getY)){
+                /*
                 modelGame.getPlateau().caseDiscoverBomb(launcher.getViewGame().getPlateauGUI(),getX,getY);
                 modelGame.getExplosion().prepare(launcher.squareSizeScene);
                 launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getExplosionGif());
@@ -53,8 +54,8 @@ public class ControllerGame implements EventHandler<MouseEvent> {
 
             }else if(modelGame.getPlateau().isHeWinning(launcher.getViewGame().getPlateauGUI())){
                 launcher.getViewGame().getRoot().getChildren().add(launcher.getViewGame().getWinPopUp());
-            }else{
-                modelGame.getPlateau().startWaveDetection(launcher.getViewGame().getPlateauGUI(),getX,getY);
+            */}else{
+                modelGame.getPlateau().openCase(getX,getY);
             }
 
         }catch (NullPointerException e){

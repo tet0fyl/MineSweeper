@@ -1,9 +1,6 @@
 package Models;
 
-import Tool.PathCst;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 public class Plateau{
@@ -18,7 +15,6 @@ public class Plateau{
     int nbBombePlace;
     String modeDifficulte;
     boolean bombeCliquee;
-    boolean voirLePlacementDesBombe = false;
     int caseSizeGUI = 30;
 
     Plateau(String modeDifficulte) {
@@ -34,11 +30,14 @@ public class Plateau{
         nbBombePlace = nbBombe;
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
-                plateau[i][j] = new Case(false);
+                Case newCase = new Case(this,i,j);
+                plateau[i][j] = newCase;
                 if (nbBombePlace>0 && Math.random() > 0.80) {
                     System.out.println("Il y a une bombe en x : " + i + " et y : " + j);
-                    plateau[i][j].jaiUneBombe = true;
+                    newCase.setJaiUneBombe(true);
                     nbBombePlace--;
+                }else{
+                    newCase.setJaiUneBombe(false);
                 }
             }
         }
@@ -46,29 +45,16 @@ public class Plateau{
         plateauGUI = createLayerFromPlateau();
     }
 
+
     public void jaiCliqueSurUneBombe() {
         bombeCliquee = true;
     }
 
-    public byte combienDeBombeDansMonVoisinage(int x, int y) {
-        byte nbBombeDansLeVoisinage = 0;
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (i == j || (x+i) == -1 || (y+j) == -1 || (x+i) == nbDeCase || (y+j) == nbDeCase) {
-                    continue;
-                }
-                if (plateau[x+i][y+j].jaiUneBombe) {
-                    nbBombeDansLeVoisinage++;
-                }
-            }
+
+    public boolean jaiUneBombe( int x, int y) {
+        if (plateau[x][y].jaiUneBombe){
+                jaiCliqueSurUneBombe();
         }
-
-        return nbBombeDansLeVoisinage;
-    }
-
-    public boolean jaiUneBombe(int x, int y) {
-        if (plateau[x][y].jaiUneBombe)
-            jaiCliqueSurUneBombe();
         return plateau[x][y].jaiUneBombe;
     }
 
@@ -77,14 +63,6 @@ public class Plateau{
         for (int i = 0; i < plateau.length; i++) {
             for (int j = 0; j < plateau.length; j++) {
                 Button btn = new Button();
-
-                if(voirLePlacementDesBombe){
-                    if(jaiUneBombe(i,j)){
-                        btn.setText("B");
-                    }else{
-                        btn.setText(String.valueOf(combienDeBombeDansMonVoisinage(i,j)));
-                    }
-                }
 
                 btn.setMinWidth(caseSizeGUI);
                 btn.setMinHeight(caseSizeGUI);
@@ -99,15 +77,10 @@ public class Plateau{
         return nbBombe-nbBombePlace;
     }
 
-    public void caseDiscoverBomb(GridPane grid, int x, int y){
-        Button btn = (Button)getNodeFromGridPane(grid,x,y);
-        ImageView imgBomb = new ImageView(PathCst.urlBombImg);
-        imgBomb.setFitWidth(caseSizeGUI-20);
-        imgBomb.setFitHeight(caseSizeGUI-20);
-        btn.setGraphic(imgBomb);
-
+    public int getLength(){
+        return plateau.length;
     }
-
+/*
     public void caseDiscoveredAllGameOver(GridPane grid){
         for (int i = 0; i < this.plateau.length; i++) {
             for (int j = 0; j < this.plateau[i].length; j++) {
@@ -119,8 +92,9 @@ public class Plateau{
                 }
             }
         }
-    }
+    }*/
 
+/*
     public boolean isHeWinning(GridPane grid){
         int nbDeCaseDecouverte = 0;
         for (int i = 0; i < this.plateau.length; i++) {
@@ -138,10 +112,18 @@ public class Plateau{
         }else{
             return false;
         }
+    }*/
+
+    public void openCase(int x, int y){
+        getCase(x,y).openIt();
     }
 
     public GridPane getPlateauGUI() {
         return plateauGUI;
+    }
+
+    public Case getCase(int x,int y) {
+        return plateau[x][y];
     }
 
     ////////////////////////////////////////
@@ -161,7 +143,7 @@ public class Plateau{
      *
      * Il faudrait que je cherche au niveau des methodes recursive
      */
-
+/*
     /////////////////////////////////////////////////////////////////////////////////
 
     public void startWaveDetection(GridPane grid, int x , int y){
@@ -277,14 +259,12 @@ public class Plateau{
         }
     }
 
-    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
-        for (Node node : gridPane.getChildren()) {
-            if (GridPane.getColumnIndex(node) == col && GridPane.getRowIndex(node) == row) {
-                return node;
-            }
-        }
-        return null;
-    }
+
+ */
+
+
+
+
     /////////////////////////////////////////////////////////////////////////////////
                         ////////////////////////////////////////
 
