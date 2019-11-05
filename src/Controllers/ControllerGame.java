@@ -12,6 +12,7 @@ public class ControllerGame implements EventHandler<MouseEvent> {
 
     private ModelGame modelGame;
     private ViewHandler launcher;
+    private boolean startTheTimerTheFirstClick = true;
 
     public ControllerGame(ViewHandler launcher, ModelGame modelGame){
         this.launcher=launcher;
@@ -23,40 +24,47 @@ public class ControllerGame implements EventHandler<MouseEvent> {
 
     @Override
     public void handle(MouseEvent mouseEvent) {
-
-        modelGame.timer.start();
+        if(startTheTimerTheFirstClick){
+            modelGame.timer.start();
+            startTheTimerTheFirstClick=false;
+        }
 
         if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetour())){
             modelGame.timer.stopTimer();
             launcher.launchMenu();
         }
 
-        if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetourMenu())){
+        if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetourMenuGagnee())){
             launcher.launchMenu();
         }
+
+        if(mouseEvent.getSource().equals(launcher.getViewGame().getBtnRetourMenuPerdu())){
+            launcher.launchMenu();
+        }
+
         try{
             Node node = (Node) mouseEvent.getSource();
             Integer getX = GridPane.getColumnIndex(node);
             Integer getY = GridPane.getRowIndex(node);
 
-            if(modelGame.getPlateau().jaiUneBombe(getX,getY)){
-                /*
-                modelGame.getPlateau().caseDiscoverBomb(launcher.getViewGame().getPlateauGUI(),getX,getY);
+            modelGame.getPlateau().openCase(getX,getY);
+
+            if(modelGame.getPlateau().getPartiePerdue()){
                 modelGame.getExplosion().prepare(launcher.squareSizeScene);
                 launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getExplosionGif());
                 launcher.getViewGame().getRoot().getChildren().add(modelGame.getExplosion().getScreenBreak());
                 modelGame.getExplosion().start();
-                modelGame.getPlateau().caseDiscoveredAllGameOver(launcher.getViewGame().getPlateauGUI());
                 modelGame.timer.stop();
                 launcher.getViewGame().getBtnRetour().setOpacity(0);
                 launcher.getViewGame().getRoot().getChildren().add(launcher.getViewGame().getGameOverPopUp());
+                modelGame.getPlateau().revealThePlateau();
 
-
-            }else if(modelGame.getPlateau().isHeWinning(launcher.getViewGame().getPlateauGUI())){
+            }else if(modelGame.getPlateau().getPartieGagnee()){
                 launcher.getViewGame().getRoot().getChildren().add(launcher.getViewGame().getWinPopUp());
-            */}else{
-                modelGame.getPlateau().openCase(getX,getY);
+                modelGame.timer.stop();
             }
+
+
 
         }catch (NullPointerException e){
             System.out.println(mouseEvent.getSource());

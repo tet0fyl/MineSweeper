@@ -8,7 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -28,21 +27,18 @@ public class ViewGame {
     ImageView imgBg;
     private BorderPane gameOverPopUp, winPopUp;
     private VBox vBoxGameOverPopUp, vBoxWinpopUp;
-    private TextField strPseudo;
-    private Button btnRetourMenu;
+    private Button btnRetourMenuPerdu, btnRetourMenuGagnee;
     private Text txtGameOver, txtWin;
 
     public ViewGame(BorderPane root, ModelGame model){
         this.root = root;
         this.model = model;
+
         hBoxStatusBar=new HBox();
-        hBoxBottom = new HBox();
+        hBoxBottom=new HBox();
 
         gameOverPopUp = new BorderPane();
         winPopUp = new BorderPane();
-
-        initVBoxGameOverPopUp();
-
 
         imgBomb = new ImageView(PathCst.urlBombImg);
         imgBomb.setFitHeight(50);
@@ -74,17 +70,21 @@ public class ViewGame {
         clearAndInitRoot();
 
 
+        initVBoxGameOverPopUp();
+        initVBoxWinPopUp();
+
+
     }
 
     public void initVBoxWinPopUp(){
         vBoxWinpopUp = new VBox();
 
-        btnRetourMenu = initButton("Retour au Menu");
+        btnRetourMenuGagnee = initButton("Retour au Menu");
 
         txtWin = initTitle("GAGNER !! ");
 
-        vBoxWinpopUp.getChildren().add(btnRetourMenu);
-        vBoxWinpopUp.getChildren().add(txtGameOver);
+        vBoxWinpopUp.getChildren().add(btnRetourMenuGagnee);
+        vBoxWinpopUp.getChildren().add(txtWin);
 
         vBoxWinpopUp.setAlignment(Pos.TOP_CENTER);
         vBoxWinpopUp.setMinWidth(600);
@@ -99,11 +99,11 @@ public class ViewGame {
     public void initVBoxGameOverPopUp(){
         vBoxGameOverPopUp = new VBox();
 
-        btnRetourMenu = initButton("Retour au Menu");
+        btnRetourMenuPerdu = initButton("Retour au Menu");
 
         txtGameOver = initTitle("GAME OVER");
 
-        vBoxGameOverPopUp.getChildren().add(btnRetourMenu);
+        vBoxGameOverPopUp.getChildren().add(btnRetourMenuPerdu);
         vBoxGameOverPopUp.getChildren().add(txtGameOver);
 
         vBoxGameOverPopUp.setAlignment(Pos.TOP_CENTER);
@@ -165,7 +165,8 @@ public class ViewGame {
         }
 
         btnRetour.setOnMouseClicked(controllerGame);
-        btnRetourMenu.setOnMouseClicked(controllerGame);
+        btnRetourMenuPerdu.setOnMouseClicked(controllerGame);
+        btnRetourMenuGagnee.setOnMouseClicked(controllerGame);
     }
 
     public GridPane getPlateauGUI() {
@@ -192,7 +193,11 @@ public class ViewGame {
         return winPopUp;
     }
 
-    public Button getBtnRetourMenu() {
-        return btnRetourMenu;
+    public Button getBtnRetourMenuGagnee() {
+        return btnRetourMenuGagnee;
+    }
+
+    public Button getBtnRetourMenuPerdu() {
+        return btnRetourMenuPerdu;
     }
 }

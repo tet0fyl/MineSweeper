@@ -1,8 +1,11 @@
 package Models;
 
+import Tool.PathCst;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+
 
 public class Case {
     boolean jaiUneBombe;
@@ -22,11 +25,20 @@ public class Case {
     }
 
     public void openIt(){
-        if(jaiUneBombe  || open){
+        Button btn = (Button)getNodeFromGridPane(x,y);
 
-        }else{
+        if(jaiUneBombe){
+            ImageView imgBomb = new ImageView(PathCst.urlBombImg);
+            imgBomb.setFitHeight(10);
+            imgBomb.setFitWidth(10);
+            btn.setGraphic(imgBomb);
+            plateau.jaiCliqueSurUneBombe();
+        }else if(!open){
+            System.out.println(plateau.nbCaseClose);
+            if(plateau.nbCaseClose-- < 0){
+                plateau.partiGagnee = true;
+            }
             open=true;
-            Button btn = (Button)getNodeFromGridPane(x,y);
             byte nbBombe = combienDeBombeDansMonVoisinage(x,y);
             btn.setText(String.valueOf(nbBombe));
             if(nbBombe == 0){

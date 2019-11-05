@@ -30,8 +30,7 @@ public class ViewHandler extends Application {
         root=new BorderPane();
         scene= new Scene(root,squareSizeScene,squareSizeScene);
 
-        //launchMenu();
-        launchGame();
+        launchMenu();
 
         root.getStylesheets().add("Asset/css/style.css");
 
