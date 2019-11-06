@@ -34,13 +34,13 @@ public class Case {
             btn.setGraphic(imgBomb);
             plateau.jaiCliqueSurUneBombe();
         }else if(!open){
-            System.out.println(plateau.nbCaseClose);
             if(plateau.nbCaseClose-- < 0){
                 plateau.partiGagnee = true;
             }
             open=true;
             byte nbBombe = combienDeBombeDansMonVoisinage(x,y);
-            btn.setText(String.valueOf(nbBombe));
+            btn.getStyleClass().remove("btn");
+            btn.getStyleClass().add("caseDiscover");
             if(nbBombe == 0){
                 for (int i = -1; i <= 1; i++) {
                     for (int j = -1; j <= 1; j++) {
@@ -50,6 +50,8 @@ public class Case {
                             plateau.getCase(x+i,y+j).openIt();
                     }
                 }
+            }else{
+                btn.setText(String.valueOf(nbBombe));
             }
         }
     }

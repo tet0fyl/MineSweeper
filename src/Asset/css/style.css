@@ -56,3 +56,11 @@
     -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
     -fx-text-fill: white;
 }
+
+.caseDiscover{
+    -fx-background-color:
+        #bcbaba;
+    -fx-border-color:black;
+    -fx-background-insets: 2 0 0 0,2 0 3 0, 2 0 4 0, 2 0 5 0;
+    -fx-text-fill: black;
+}
