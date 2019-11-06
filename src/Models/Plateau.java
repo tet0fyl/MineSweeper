@@ -46,7 +46,7 @@ public class Plateau{
         }
         System.out.println("il reste " + nbBombePlacee + " bombe a poser");
         plateauGUI = createLayerFromPlateau();
-        nbCaseClose = nbBombePlacee + plateau.length*plateau.length;
+        nbCaseClose = plateau.length*plateau.length - nbBombe;
     }
 
 

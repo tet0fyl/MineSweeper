@@ -34,7 +34,7 @@ public class Case {
             btn.setGraphic(imgBomb);
             plateau.jaiCliqueSurUneBombe();
         }else if(!open){
-            if(plateau.nbCaseClose-- < 0){
+            if(--plateau.nbCaseClose <= 0){
                 plateau.partiGagnee = true;
             }
             open=true;
