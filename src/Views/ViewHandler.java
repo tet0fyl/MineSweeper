@@ -36,6 +36,8 @@ public class ViewHandler extends Application {
 
 
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.setTitle("MineSweeper");
         stage.show();
 
     }

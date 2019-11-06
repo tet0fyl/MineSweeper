@@ -80,7 +80,7 @@ public class ControllerMenu implements EventHandler<MouseEvent> {
 
                 launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().add("btnOptionPressed");
                 launcher.getViewMenuPrincipal().getBtnMedium().getStyleClass().add("btn-secondary");
-                launcher.getViewMenuPrincipal().getBtnHard().getStyleClass().add("btn-secondary");
+                launcher.getViewMenuPrincipal().getBtnEasy().getStyleClass().add("btn-secondary");
             }
 
 
