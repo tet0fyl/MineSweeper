@@ -35,7 +35,7 @@ public class Plateau{
             for (int j = 0; j < this.plateau[i].length; j++) {
                 Case newCase = new Case(this,i,j);
                 plateau[i][j] = newCase;
-                if (nbBombePlacee >0 && Math.random() > 0.80) {
+                if (nbBombePlacee >0 && Math.random() > 0.90) {
                     System.out.println("Il y a une bombe en x : " + i + " et y : " + j);
                     newCase.setJaiUneBombe(true);
                     nbBombePlacee--;
